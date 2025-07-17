@@ -1,0 +1,27 @@
+---
+strategy: polling
+no_screen_padding: "no"
+dark_mode: "no"
+static_data: ""
+polling_verb: get
+polling_url: https://webapi.vvo-online.de/dm?stopid={{stopid}}&limit={{limit}}
+polling_headers: ""
+polling_body: ""
+id: 113464
+custom_fields:
+  - keyname: bio
+    name: About This Plugin
+    field_type: author_bio
+    description: Uses the EFA/VVO-Online REST API to display departures of DVB stations
+  - keyname: stopid
+    field_type: string
+    name: Stop
+    default: "33000028"
+    description: ID of the stop (https://www.govdata.de/suche/daten/haltestellen-im-vvo-tagesaktuell)
+  - keyname: limit
+    field_type: number
+    name: Limit
+    default: 8
+    description: Maximum number of results
+name: DVB - Dresden Public Transport
+refresh_interval: 15

@@ -1,0 +1,70 @@
+<div class="title_bar">
+<!--
+<img class="image" src="https://www.dvb.de/-/media/images/defaults/dvb-logo.jpg" />
+-->
+<span class="title"><b>{{ Name }}</b></span>
+</div>
+
+<div class="layout" layout--top>
+  <div class="stretch-x">
+    <table class="table">
+      <thead>
+        <tr>
+          {% if trmnl.user.locale == 'de'%}
+          <th align=center><span class="title label label--inverted">Abfahrt</span></th>
+          <th align=center><span class="title label label--inverted">Richtung</span></th>
+          <th align=center><span class="title label label--inverted">Linie</span></th>
+          {% else %}
+          <th align=center><span class="title label label--inverted">Time</span></th>
+          <th align=center><span class="title label label--inverted">Destination</span></th>
+          <th align=center><span class="title label label--inverted">Line</span></th>
+          {% endif %}
+          <th><span class="title label label--inverted">&nbsp;</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in Departures limit: 3 %}
+        <tr>
+          <td>
+            <span class="label">
+              <!--
+              carve out the scheduled time: "ScheduledTime": "/Date(1751908920000-0000)/"
+              -->
+              {{item.ScheduledTime | slice: 6,10 | plus: trmnl.user.utc_offset | date: "%H:%M" }}
+            </span>
+          </td>
+          <td>
+            <span class="label">
+              {{ item.Direction }}
+            </span>
+          </td>
+          <td align=right>
+            <span class="label">
+              {{ item.LineName }}
+            </span>
+          </td>
+          <td align=right>
+            <span class="label">
+              {% case item.Mot %}
+              {% when "CityBus" %}
+              <img class="image" src="https://img.icons8.com/ios/25/bus.png"/>
+              {% when "Tram" %}
+              <img class="image" src="https://img.icons8.com/ios/25/tram.png"/>
+              {% when "SuburbanRailway" %}
+              <img class="image" src="https://img.icons8.com/ios-filled/25/subway.png"/>
+              {% else %}
+              <img class="image" src="https://img.icons8.com/ios/25/train.png"/>
+              {% endcase %}
+            </span>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="title_bar">
+  <img class="image" src="https://www.dvb.de/-/media/images/defaults/dvb-logo.jpg" />
+  <span class="title">DVB - {{ Place }}</span>
+  <span class="instance">{{ trmnl.system.timestamp_utc | plus: trmnl.user.utc_offset | date: "%d.%m.%y - %H:%M" }}</span>
+</div>
